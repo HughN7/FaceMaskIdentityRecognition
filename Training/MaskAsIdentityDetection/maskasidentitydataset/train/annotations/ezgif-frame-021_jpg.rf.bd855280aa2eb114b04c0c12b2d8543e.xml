@@ -1,0 +1,27 @@
+<annotation>
+	<folder></folder>
+	<filename>ezgif-frame-021_jpg.rf.bd855280aa2eb114b04c0c12b2d8543e.jpg</filename>
+	<path>ezgif-frame-021_jpg.rf.bd855280aa2eb114b04c0c12b2d8543e.jpg</path>
+	<source>
+		<database>roboflow.ai</database>
+	</source>
+	<size>
+		<width>1748</width>
+		<height>982</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>MaskIdentity</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<bndbox>
+			<xmin>751</xmin>
+			<xmax>1356</xmax>
+			<ymin>65</ymin>
+			<ymax>786</ymax>
+		</bndbox>
+	</object>
+</annotation>

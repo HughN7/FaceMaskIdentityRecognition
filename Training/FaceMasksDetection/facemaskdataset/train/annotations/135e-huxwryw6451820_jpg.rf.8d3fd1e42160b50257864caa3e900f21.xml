@@ -1,0 +1,27 @@
+<annotation>
+	<folder></folder>
+	<filename>135e-huxwryw6451820_jpg.rf.8d3fd1e42160b50257864caa3e900f21.jpg</filename>
+	<path>135e-huxwryw6451820_jpg.rf.8d3fd1e42160b50257864caa3e900f21.jpg</path>
+	<source>
+		<database>roboflow.ai</database>
+	</source>
+	<size>
+		<width>128</width>
+		<height>128</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>mask</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<bndbox>
+			<xmin>1</xmin>
+			<xmax>128</xmax>
+			<ymin>1</ymin>
+			<ymax>106</ymax>
+		</bndbox>
+	</object>
+</annotation>
