@@ -6,7 +6,7 @@
 - https://github.com/HughN7/FaceMaskIdentityRecognition
 
 ## Code Structure:
-- Jupyter Notebooks
+- Jupyter Notebooks for models
 - HTML for webpage
 
 ## Build Instructions:
