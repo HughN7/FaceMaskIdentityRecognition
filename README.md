@@ -1,7 +1,7 @@
 # **FaceMaskIdentityRecognition**
 - An investigation into recognizing individuals whilst still wearing a mask. 
 
-##GitHub:
+## GitHub:
 https://github.com/HughN7/FaceMaskIdentityRecognition
 Github contains source code for the jupyter notebooks, website, and demo video.
 
