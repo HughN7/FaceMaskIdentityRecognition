@@ -10,6 +10,8 @@
 - HTML for webpage
 
 ## Build Instructions:
+- Download code from Github
+- Upload folders to Google Drive
 
 ## Data preparation:
 - 'LabelVideoFramesScript.ipynb' is a google colaboratory script. 
