@@ -9,12 +9,14 @@
 - Jupyter Notebooks for models
 - HTML for webpage
 
-## Demo Build Instructions:
-- Download demo folder from Github
-- Upload said folder onto Google Drive
-- Run the Notebook inside folder in Colab
+## Demo Instructions:
+- Refer to link: https://drive.google.com/drive/folders/1xPhQqDeVPCzEsdDdQ2Dvq1yV-jJqNcZR?usp=sharing
+- Uploading files to Github resulted in some errors due to size. 
 
-## Data preparation:
+## Frame Script:
 - 'LabelVideoFramesScript.ipynb' is a google colaboratory script. 
   - Accepts a single video with a couple settings within the file that can be modified
   - Video should be the target user facing the camera. 
+  - Outputs zip file containing frames + labels in YOLO format. 
+    - Use tool such as roboflow to convert to PascalVoc if necessary. 
+  - Options to capture whole face, half face, eye region and even convert into Local Binary Pattern images if necessary. 
