@@ -9,9 +9,10 @@
 - Jupyter Notebooks for models
 - HTML for webpage
 
-## Build Instructions:
-- Download code from Github
-- Upload folders to Google Drive
+## Demo Build Instructions:
+- Download demo folder from Github
+- Upload said folder onto Google Drive
+- Run the Notebook inside folder in Colab
 
 ## Data preparation:
 - 'LabelVideoFramesScript.ipynb' is a google colaboratory script. 
