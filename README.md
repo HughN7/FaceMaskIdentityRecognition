@@ -26,6 +26,12 @@ To do it manually:
 - 'LabelVideoFramesScript.ipynb' is a google colaboratory script. 
   - Accepts a single video with a couple settings within the file that can be modified
   - Video should be the target user facing the camera. 
-  - Outputs zip file containing frames + labels in YOLO format. 
+  - Outputs zip file containing frames + labels in YOLOv3 format. 
     - Use tool such as roboflow to convert to PascalVoc if necessary. 
-  - Options to capture whole face, half face, eye region and even convert into Local Binary Pattern images if necessary. 
+  - **To use this, you will need to modify it to point to the location of your stored video file**
+  - Script has Options to:
+    - Capture whole face, 
+    - Half face, 
+    - Eye region 
+    - Convert into Local Binary Pattern images
+    - Option to only parse video into frames (for other models such as resnet)
