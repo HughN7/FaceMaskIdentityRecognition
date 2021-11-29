@@ -2,8 +2,8 @@
 - An investigation into recognizing individuals whilst still wearing a mask. 
 
 ## GitHub:
-https://github.com/HughN7/FaceMaskIdentityRecognition
 Github contains source code for the jupyter notebooks, website, and demo video.
+https://github.com/HughN7/FaceMaskIdentityRecognition
 
 ## Data preparation:
 - 'LabelVideoFramesScript.ipynb' is a google colaboratory script. 
