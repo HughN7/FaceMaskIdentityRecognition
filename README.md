@@ -10,8 +10,17 @@
 - HTML for webpage
 
 ## Demo Instructions:
-- Refer to link: https://drive.google.com/drive/folders/1xPhQqDeVPCzEsdDdQ2Dvq1yV-jJqNcZR?usp=sharing
-- Uploading files to Github resulted in some errors due to size. 
+- Demo link (no download): https://drive.google.com/drive/folders/1xPhQqDeVPCzEsdDdQ2Dvq1yV-jJqNcZR?usp=sharing
+
+To do it manually:
+- Download "IdentityRecognitionDemo" folder from this repository
+- Download the two larger weights:
+  - https://drive.google.com/file/d/1FlupFAxX8tfSRzPLyTcQtuP2XPZPFyX8/view?usp=sharing
+  - https://drive.google.com/file/d/1HENJ5krAr2RxCXKJWcQGEpwqpcR7Opd3/view?usp=sharing
+- Place weights into "IdentityRecognitionDemo" folder
+- Upload entire folder onto Google Drive. Do not nest folder under any other folders in Google Drive. 
+- Enter the folder and open IdentityRecognitionDemo.ipynb in Colaboratory
+- Run the Notebook
 
 ## Frame Script:
 - 'LabelVideoFramesScript.ipynb' is a google colaboratory script. 
