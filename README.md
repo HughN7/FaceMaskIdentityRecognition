@@ -15,8 +15,8 @@
 - Enter the folder and open IdentityRecognitionDemo.ipynb in Colaboratory
 - Run the Notebook
 
-## Frame Script:
-- 'LabelVideoFramesScript.ipynb' is a google colaboratory script. 
+## Training Parse Script:
+- 'LabelVideoFramesScript.ipynb' is a notebook that serves as a google colaboratory script. 
   - Accepts a single video with a couple settings within the file that can be modified
   - Video should be the target user facing the camera. 
   - Outputs zip file containing frames + labels in YOLOv3 format. 
