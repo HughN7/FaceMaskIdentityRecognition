@@ -13087,52 +13087,30 @@
 		<div class="topnav">
 			<a href="../index.html">Home</a>
 			<a href="eye.html">Eye</a>
-			<a href="faceMasks.html">Face Masks</a>
 			<a class="active" href="topFace.html">Top Half Face</a>
-			<a href="manualYolo.html">Manual</a>
-			<a href="maskIdentity.html">Mask Identity</a>
+			<a href="wholeFace.html">Whole Face</a>
+			<a href="demoResults.html">Results</a>
 			<a class="git" href="https://github.com/HughN7/FaceMaskIdentityRecognition" target="_blank">GitHub</a>
-		</div>
-		<div style="padding-left:16px">
-			<h2 style="text-align: center">Face Top Half Detection</h2>
-			<p>Some content..</p>
 		</div>
 		<div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1">#Using imageAI yolov3 api wrapper</span>
-<span class="err">!</span><span class="n">pip3</span> <span class="n">install</span> <span class="n">imageai</span> <span class="o">--</span><span class="n">upgrade</span>
-</pre></div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Identity-Recognition"><strong><em>Identity Recognition</em></strong><a class="anchor-link" href="#Identity-Recognition">&#182;</a></h1><p>This notebook is to train on a person's <strong>top half of their face</strong> as a custom object</p>
 
-    </div>
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OlafenwaMoses</span><span class="o">/</span><span class="n">ImageAI</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">essential</span><span class="o">-</span><span class="n">v4</span><span class="o">/</span><span class="n">pretrained</span><span class="o">-</span><span class="n">yolov3</span><span class="o">.</span><span class="n">h5</span>
-</pre></div>
+<div class=" highlight hl-python"><pre><span></span><span class="c1">## connecting to Google Drive</span>
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
 <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -13140,15 +13118,188 @@
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mounted at /content/drive
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Prepare-YOLO">Prepare YOLO<a class="anchor-link" href="#Prepare-YOLO">&#182;</a></h1><ul>
+<li>"<a href="https://github.com/ultralytics/yolov5.git&quot;**">https://github.com/ultralytics/yolov5.git&quot;**</a></li>
+</ul>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">imageai.Detection.Custom</span> <span class="kn">import</span> <span class="n">DetectionModelTrainer</span>
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">datetime</span><span class="o">,</span> <span class="nn">os</span>
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ultralytics</span><span class="o">/</span><span class="n">yolov5</span><span class="o">.</span><span class="n">git</span>
+<span class="o">%</span><span class="n">cd</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">yolov5</span><span class="o">/</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Cloning into &#39;yolov5&#39;...
+remote: Enumerating objects: 10081, done.
+remote: Total 10081 (delta 0), reused 0 (delta 0), pack-reused 10081
+Receiving objects: 100% (10081/10081), 10.36 MiB | 11.83 MiB/s, done.
+Resolving deltas: 100% (6994/6994), done.
+/content/yolov5
+Requirement already satisfied: matplotlib&gt;=3.2.2 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 4)) (3.2.2)
+Requirement already satisfied: numpy&gt;=1.18.5 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 5)) (1.19.5)
+Requirement already satisfied: opencv-python&gt;=4.1.2 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 6)) (4.1.2.30)
+Requirement already satisfied: Pillow&gt;=7.1.2 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 7)) (7.1.2)
+Collecting PyYAML&gt;=5.3.1
+  Downloading PyYAML-6.0-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (596 kB)
+     |████████████████████████████████| 596 kB 13.4 MB/s 
+Requirement already satisfied: requests&gt;=2.23.0 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 9)) (2.23.0)
+Requirement already satisfied: scipy&gt;=1.4.1 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 10)) (1.4.1)
+Requirement already satisfied: torch&gt;=1.7.0 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 11)) (1.10.0+cu111)
+Requirement already satisfied: torchvision&gt;=0.8.1 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 12)) (0.11.1+cu111)
+Requirement already satisfied: tqdm&gt;=4.41.0 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 13)) (4.62.3)
+Requirement already satisfied: tensorboard&gt;=2.4.1 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 16)) (2.7.0)
+Requirement already satisfied: pandas&gt;=1.1.4 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 20)) (1.1.5)
+Requirement already satisfied: seaborn&gt;=0.11.0 in /usr/local/lib/python3.7/dist-packages (from -r requirements.txt (line 21)) (0.11.2)
+Collecting thop
+  Downloading thop-0.0.31.post2005241907-py3-none-any.whl (8.7 kB)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib&gt;=3.2.2-&gt;-r requirements.txt (line 4)) (0.11.0)
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib&gt;=3.2.2-&gt;-r requirements.txt (line 4)) (3.0.6)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib&gt;=3.2.2-&gt;-r requirements.txt (line 4)) (1.3.2)
+Requirement already satisfied: python-dateutil&gt;=2.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib&gt;=3.2.2-&gt;-r requirements.txt (line 4)) (2.8.2)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.23.0-&gt;-r requirements.txt (line 9)) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.23.0-&gt;-r requirements.txt (line 9)) (1.24.3)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.23.0-&gt;-r requirements.txt (line 9)) (3.0.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.23.0-&gt;-r requirements.txt (line 9)) (2021.10.8)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from torch&gt;=1.7.0-&gt;-r requirements.txt (line 11)) (3.10.0.2)
+Requirement already satisfied: absl-py&gt;=0.4 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (0.12.0)
+Requirement already satisfied: grpcio&gt;=1.24.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (1.42.0)
+Requirement already satisfied: markdown&gt;=2.6.8 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (3.3.6)
+Requirement already satisfied: protobuf&gt;=3.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (3.17.3)
+Requirement already satisfied: wheel&gt;=0.26 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (0.37.0)
+Requirement already satisfied: tensorboard-data-server&lt;0.7.0,&gt;=0.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (0.6.1)
+Requirement already satisfied: tensorboard-plugin-wit&gt;=1.6.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (1.8.0)
+Requirement already satisfied: google-auth-oauthlib&lt;0.5,&gt;=0.4.1 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (0.4.6)
+Requirement already satisfied: google-auth&lt;3,&gt;=1.6.3 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (1.35.0)
+Requirement already satisfied: werkzeug&gt;=0.11.15 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (1.0.1)
+Requirement already satisfied: setuptools&gt;=41.0.0 in /usr/local/lib/python3.7/dist-packages (from tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (57.4.0)
+Requirement already satisfied: pytz&gt;=2017.2 in /usr/local/lib/python3.7/dist-packages (from pandas&gt;=1.1.4-&gt;-r requirements.txt (line 20)) (2018.9)
+Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from absl-py&gt;=0.4-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (1.15.0)
+Requirement already satisfied: pyasn1-modules&gt;=0.2.1 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (0.2.8)
+Requirement already satisfied: cachetools&lt;5.0,&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (4.2.4)
+Requirement already satisfied: rsa&lt;5,&gt;=3.1.4 in /usr/local/lib/python3.7/dist-packages (from google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (4.7.2)
+Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /usr/local/lib/python3.7/dist-packages (from google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (1.3.0)
+Requirement already satisfied: importlib-metadata&gt;=4.4 in /usr/local/lib/python3.7/dist-packages (from markdown&gt;=2.6.8-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (4.8.2)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from importlib-metadata&gt;=4.4-&gt;markdown&gt;=2.6.8-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (3.6.0)
+Requirement already satisfied: pyasn1&lt;0.5.0,&gt;=0.4.6 in /usr/local/lib/python3.7/dist-packages (from pyasn1-modules&gt;=0.2.1-&gt;google-auth&lt;3,&gt;=1.6.3-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (0.4.8)
+Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.7/dist-packages (from requests-oauthlib&gt;=0.7.0-&gt;google-auth-oauthlib&lt;0.5,&gt;=0.4.1-&gt;tensorboard&gt;=2.4.1-&gt;-r requirements.txt (line 16)) (3.1.1)
+Installing collected packages: thop, PyYAML
+  Attempting uninstall: PyYAML
+    Found existing installation: PyYAML 3.13
+    Uninstalling PyYAML-3.13:
+      Successfully uninstalled PyYAML-3.13
+Successfully installed PyYAML-6.0 thop-0.0.31.post2005241907
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Inspect-Environment-+-Imports">Inspect Environment + Imports<a class="anchor-link" href="#Inspect-Environment-+-Imports">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>  <span class="c1"># for displaying images</span>
+<span class="c1">#from utils.google_utils import gdrive_download  # for downloading models/datasets</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;torch </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_properties</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;CPU&#39;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch 1.10.0+cu111 _CudaDeviceProperties(name=&#39;Tesla P100-PCIE-16GB&#39;, major=6, minor=0, total_memory=16280MB, multi_processor_count=56)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Download-dataset-prepared-from-roboflow">Download dataset prepared from roboflow<a class="anchor-link" href="#Download-dataset-prepared-from-roboflow">&#182;</a></h1><ul>
+<li>roboflow will also unzip</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># set up environment</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATASET_DIRECTORY&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;/content/datasets&quot;</span>
 </pre></div>
 
     </div>
@@ -13161,11 +13312,216 @@
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">dataDirectory</span><span class="o">=</span><span class="s2">&quot;/content/drive/MyDrive/FaceTopHalfDetection/tophalfdatasettiny&quot;</span>
-<span class="n">objectNames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">]</span>
-<span class="n">numberOfEpochs</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">batchSize</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">pretrainedModel</span> <span class="o">=</span> <span class="s2">&quot;pretrained-yolov3.h5&quot;</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1">#Place roboflow dataset codeblock here - removed from public github repository because of private api key</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">roboflow</span>
+
+<span class="kn">from</span> <span class="nn">roboflow</span> <span class="kn">import</span> <span class="n">Roboflow</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">Roboflow</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1">#API KEY REMOVED FROM GITHUB BECAUSE PRIVATE</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">workspace</span><span class="p">()</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="s2">&quot;facetophalf&quot;</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;yolov5&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Collecting roboflow
+  Downloading roboflow-0.1.8.tar.gz (14 kB)
+Collecting certifi==2021.5.30
+  Downloading certifi-2021.5.30-py2.py3-none-any.whl (145 kB)
+     |████████████████████████████████| 145 kB 14.9 MB/s 
+Collecting chardet==4.0.0
+  Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+     |████████████████████████████████| 178 kB 65.2 MB/s 
+Collecting cycler==0.10.0
+  Downloading cycler-0.10.0-py2.py3-none-any.whl (6.5 kB)
+Requirement already satisfied: idna==2.10 in /usr/local/lib/python3.7/dist-packages (from roboflow) (2.10)
+Collecting kiwisolver==1.3.1
+  Downloading kiwisolver-1.3.1-cp37-cp37m-manylinux1_x86_64.whl (1.1 MB)
+     |████████████████████████████████| 1.1 MB 59.2 MB/s 
+Requirement already satisfied: matplotlib in /usr/local/lib/python3.7/dist-packages (from roboflow) (3.2.2)
+Requirement already satisfied: numpy&gt;=1.18.5 in /usr/local/lib/python3.7/dist-packages (from roboflow) (1.19.5)
+Requirement already satisfied: opencv-python&gt;=4.1.2 in /usr/local/lib/python3.7/dist-packages (from roboflow) (4.1.2.30)
+Requirement already satisfied: Pillow&gt;=7.1.2 in /usr/local/lib/python3.7/dist-packages (from roboflow) (7.1.2)
+Collecting pyparsing==2.4.7
+  Downloading pyparsing-2.4.7-py2.py3-none-any.whl (67 kB)
+     |████████████████████████████████| 67 kB 7.9 MB/s 
+Requirement already satisfied: python-dateutil in /usr/local/lib/python3.7/dist-packages (from roboflow) (2.8.2)
+Collecting python-dotenv
+  Downloading python_dotenv-0.19.2-py2.py3-none-any.whl (17 kB)
+Requirement already satisfied: requests in /usr/local/lib/python3.7/dist-packages (from roboflow) (2.23.0)
+Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from roboflow) (1.15.0)
+Collecting urllib3==1.26.6
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+     |████████████████████████████████| 138 kB 76.3 MB/s 
+Collecting wget
+  Downloading wget-3.2.zip (10 kB)
+Requirement already satisfied: tqdm&gt;=4.41.0 in /usr/local/lib/python3.7/dist-packages (from roboflow) (4.62.3)
+Requirement already satisfied: PyYAML&gt;=5.3.1 in /usr/local/lib/python3.7/dist-packages (from roboflow) (6.0)
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |████████████████████████████████| 62 kB 1.1 MB/s 
+Requirement already satisfied: charset-normalizer~=2.0.0 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;roboflow) (2.0.7)
+Building wheels for collected packages: roboflow, wget
+  Building wheel for roboflow (setup.py) ... done
+  Created wheel for roboflow: filename=roboflow-0.1.8-py3-none-any.whl size=20082 sha256=b0acd097d375d5dd27b5ae10469a84629e5ab2bafaa410ce19a86acd524727bc
+  Stored in directory: /root/.cache/pip/wheels/db/11/cc/728f5aaa27dd0a16f49c73090f1ef72ba4701c4c0999eba381
+  Building wheel for wget (setup.py) ... done
+  Created wheel for wget: filename=wget-3.2-py3-none-any.whl size=9672 sha256=17cdc2398bab16ad4f4d9e655b6e08b4c8d9a789bdb699306015a3e69f2d9820
+  Stored in directory: /root/.cache/pip/wheels/a1/b6/7c/0e63e34eb06634181c63adacca38b79ff8f35c37e3c13e3c02
+Successfully built roboflow wget
+Installing collected packages: urllib3, pyparsing, kiwisolver, cycler, certifi, wget, requests, python-dotenv, chardet, roboflow
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 1.24.3
+    Uninstalling urllib3-1.24.3:
+      Successfully uninstalled urllib3-1.24.3
+  Attempting uninstall: pyparsing
+    Found existing installation: pyparsing 3.0.6
+    Uninstalling pyparsing-3.0.6:
+      Successfully uninstalled pyparsing-3.0.6
+  Attempting uninstall: kiwisolver
+    Found existing installation: kiwisolver 1.3.2
+    Uninstalling kiwisolver-1.3.2:
+      Successfully uninstalled kiwisolver-1.3.2
+  Attempting uninstall: cycler
+    Found existing installation: cycler 0.11.0
+    Uninstalling cycler-0.11.0:
+      Successfully uninstalled cycler-0.11.0
+  Attempting uninstall: certifi
+    Found existing installation: certifi 2021.10.8
+    Uninstalling certifi-2021.10.8:
+      Successfully uninstalled certifi-2021.10.8
+  Attempting uninstall: requests
+    Found existing installation: requests 2.23.0
+    Uninstalling requests-2.23.0:
+      Successfully uninstalled requests-2.23.0
+  Attempting uninstall: chardet
+    Found existing installation: chardet 3.0.4
+    Uninstalling chardet-3.0.4:
+      Successfully uninstalled chardet-3.0.4
+<span class="ansi-red-fg">ERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+google-colab 1.0.0 requires requests~=2.23.0, but you have requests 2.26.0 which is incompatible.
+datascience 0.10.6 requires folium==0.2.1, but you have folium 0.8.3 which is incompatible.
+albumentations 0.1.12 requires imgaug&lt;0.2.7,&gt;=0.2.5, but you have imgaug 0.2.9 which is incompatible.</span>
+Successfully installed certifi-2021.5.30 chardet-4.0.0 cycler-0.10.0 kiwisolver-1.3.1 pyparsing-2.4.7 python-dotenv-0.19.2 requests-2.26.0 roboflow-0.1.8 urllib3-1.26.6 wget-3.2
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>loading Roboflow workspace...
+loading Roboflow project...
+Downloading Dataset Version Zip in /content/datasets/FaceTopHalf-1 to yolov5pytorch: 100% [62978192 / 62978192] bytes
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Extracting Dataset Version Zip to /content/datasets/FaceTopHalf-1 in yolov5pytorch:: 100%|██████████| 2260/2260 [00:02&lt;00:00, 949.43it/s] 
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Download-pre-trained-weights-&quot;yolov5s.pt&quot;">Download pre-trained weights "yolov5s.pt"<a class="anchor-link" href="#Download-pre-trained-weights-&quot;yolov5s.pt&quot;">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ultralytics</span><span class="o">/</span><span class="n">yolov5</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v6</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">yolov5s</span><span class="o">.</span><span class="n">pt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>--2021-11-29 21:33:51--  https://github.com/ultralytics/yolov5/releases/download/v6.0/yolov5s.pt
+Resolving github.com (github.com)... 140.82.121.4
+Connecting to github.com (github.com)|140.82.121.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github-releases.githubusercontent.com/264818686/eab38592-7168-4731-bdff-ad5ede2002be?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20211129%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20211129T213351Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=a9f8cf854c2b9e8d4c9293b95635efe2da5cc98410d11b6d6440c96b0b577bad&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;key_id=0&amp;repo_id=264818686&amp;response-content-disposition=attachment%3B%20filename%3Dyolov5s.pt&amp;response-content-type=application%2Foctet-stream [following]
+--2021-11-29 21:33:51--  https://github-releases.githubusercontent.com/264818686/eab38592-7168-4731-bdff-ad5ede2002be?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20211129%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20211129T213351Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=a9f8cf854c2b9e8d4c9293b95635efe2da5cc98410d11b6d6440c96b0b577bad&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;key_id=0&amp;repo_id=264818686&amp;response-content-disposition=attachment%3B%20filename%3Dyolov5s.pt&amp;response-content-type=application%2Foctet-stream
+Resolving github-releases.githubusercontent.com (github-releases.githubusercontent.com)... 185.199.108.154, 185.199.109.154, 185.199.110.154, ...
+Connecting to github-releases.githubusercontent.com (github-releases.githubusercontent.com)|185.199.108.154|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 14698491 (14M) [application/octet-stream]
+Saving to: ‘yolov5s.pt’
+
+yolov5s.pt          100%[===================&gt;]  14.02M  58.1MB/s    in 0.2s    
+
+2021-11-29 21:33:51 (58.1 MB/s) - ‘yolov5s.pt’ saved [14698491/14698491]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Training-the-model"><strong>Training the model</strong><a class="anchor-link" href="#Training-the-model">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">datasetPath</span> <span class="o">=</span> <span class="s2">&quot;/content/datasets/FaceTopHalf-1/data.yaml&quot;</span> <span class="c1">#needs to go to the data.yaml file, not the folder itself</span>
 </pre></div>
 
     </div>
@@ -13178,25 +13534,419 @@
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">trainer</span> <span class="o">=</span> <span class="n">DetectionModelTrainer</span><span class="p">()</span>
-<span class="n">trainer</span><span class="o">.</span><span class="n">setModelTypeAsYOLOv3</span><span class="p">()</span>
-<span class="n">trainer</span><span class="o">.</span><span class="n">setDataDirectory</span><span class="p">(</span><span class="n">data_directory</span><span class="o">=</span><span class="n">dataDirectory</span><span class="p">)</span>
-<span class="n">trainer</span><span class="o">.</span><span class="n">setTrainConfig</span><span class="p">(</span><span class="n">object_names_array</span><span class="o">=</span><span class="n">objectNames</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batchSize</span><span class="p">,</span> <span class="n">num_experiments</span><span class="o">=</span><span class="n">numberOfEpochs</span><span class="p">,</span> <span class="n">train_from_pretrained_model</span><span class="o">=</span><span class="n">pretrainedModel</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">python</span> <span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">img</span> <span class="mi">416</span> <span class="o">--</span><span class="n">batch</span> <span class="mi">64</span> <span class="o">--</span><span class="n">epoch</span> <span class="mi">50</span> <span class="o">--</span><span class="n">data</span> <span class="p">{</span><span class="n">datasetPath</span><span class="p">}</span> <span class="o">--</span><span class="n">weights</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">yolov5</span><span class="o">/</span><span class="n">yolov5s</span><span class="o">.</span><span class="n">pt</span> <span class="o">--</span><span class="n">nosave</span> <span class="o">--</span><span class="n">cache</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Downloading https://ultralytics.com/assets/Arial.ttf to /root/.config/Ultralytics/Arial.ttf...
+<span class="ansi-blue-intense-fg ansi-bold">train: </span>weights=/content/yolov5/yolov5s.pt, cfg=, data=/content/datasets/FaceTopHalf-1/data.yaml, hyp=data/hyps/hyp.scratch.yaml, epochs=50, batch_size=64, imgsz=416, rect=False, resume=False, nosave=True, noval=False, noautoanchor=False, evolve=None, bucket=, cache=ram, image_weights=False, device=, multi_scale=False, single_cls=False, adam=False, sync_bn=False, workers=8, project=runs/train, name=exp, exist_ok=False, quad=False, linear_lr=False, label_smoothing=0.0, patience=100, freeze=0, save_period=-1, local_rank=-1, entity=None, upload_dataset=False, bbox_interval=-1, artifact_alias=latest
+<span class="ansi-blue-intense-fg ansi-bold">github: </span>up to date with https://github.com/ultralytics/yolov5 ✅
+YOLOv5 🚀 v6.0-113-g5ca5dd4 torch 1.10.0+cu111 CUDA:0 (Tesla P100-PCIE-16GB, 16281MiB)
+
+<span class="ansi-blue-intense-fg ansi-bold">hyperparameters: </span>lr0=0.01, lrf=0.1, momentum=0.937, weight_decay=0.0005, warmup_epochs=3.0, warmup_momentum=0.8, warmup_bias_lr=0.1, box=0.05, cls=0.5, cls_pw=1.0, obj=1.0, obj_pw=1.0, iou_t=0.2, anchor_t=4.0, fl_gamma=0.0, hsv_h=0.015, hsv_s=0.7, hsv_v=0.4, degrees=0.0, translate=0.1, scale=0.5, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.5, mosaic=1.0, mixup=0.0, copy_paste=0.0
+<span class="ansi-blue-intense-fg ansi-bold">Weights &amp; Biases: </span>run &#39;pip install wandb&#39; to automatically track and visualize YOLOv5 🚀 runs (RECOMMENDED)
+<span class="ansi-blue-intense-fg ansi-bold">TensorBoard: </span>Start with &#39;tensorboard --logdir runs/train&#39;, view at http://localhost:6006/
+Overriding model.yaml nc=80 with nc=1
+
+                 from  n    params  module                                  arguments                     
+  0                -1  1      3520  models.common.Conv                      [3, 32, 6, 2, 2]              
+  1                -1  1     18560  models.common.Conv                      [32, 64, 3, 2]                
+  2                -1  1     18816  models.common.C3                        [64, 64, 1]                   
+  3                -1  1     73984  models.common.Conv                      [64, 128, 3, 2]               
+  4                -1  2    115712  models.common.C3                        [128, 128, 2]                 
+  5                -1  1    295424  models.common.Conv                      [128, 256, 3, 2]              
+  6                -1  3    625152  models.common.C3                        [256, 256, 3]                 
+  7                -1  1   1180672  models.common.Conv                      [256, 512, 3, 2]              
+  8                -1  1   1182720  models.common.C3                        [512, 512, 1]                 
+  9                -1  1    656896  models.common.SPPF                      [512, 512, 5]                 
+ 10                -1  1    131584  models.common.Conv                      [512, 256, 1, 1]              
+ 11                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, &#39;nearest&#39;]          
+ 12           [-1, 6]  1         0  models.common.Concat                    [1]                           
+ 13                -1  1    361984  models.common.C3                        [512, 256, 1, False]          
+ 14                -1  1     33024  models.common.Conv                      [256, 128, 1, 1]              
+ 15                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, &#39;nearest&#39;]          
+ 16           [-1, 4]  1         0  models.common.Concat                    [1]                           
+ 17                -1  1     90880  models.common.C3                        [256, 128, 1, False]          
+ 18                -1  1    147712  models.common.Conv                      [128, 128, 3, 2]              
+ 19          [-1, 14]  1         0  models.common.Concat                    [1]                           
+ 20                -1  1    296448  models.common.C3                        [256, 256, 1, False]          
+ 21                -1  1    590336  models.common.Conv                      [256, 256, 3, 2]              
+ 22          [-1, 10]  1         0  models.common.Concat                    [1]                           
+ 23                -1  1   1182720  models.common.C3                        [512, 512, 1, False]          
+ 24      [17, 20, 23]  1     16182  models.yolo.Detect                      [1, [[10, 13, 16, 30, 33, 23], [30, 61, 62, 45, 59, 119], [116, 90, 156, 198, 373, 326]], [128, 256, 512]]
+Model Summary: 270 layers, 7022326 parameters, 7022326 gradients, 15.8 GFLOPs
+
+Transferred 343/349 items from /content/yolov5/yolov5s.pt
+Scaled weight_decay = 0.0005
+<span class="ansi-blue-intense-fg ansi-bold">optimizer:</span> SGD with parameter groups 57 weight, 60 weight (no decay), 60 bias
+<span class="ansi-blue-intense-fg ansi-bold">albumentations: </span>version 1.0.3 required by YOLOv5, but version 0.1.12 is currently installed
+<span class="ansi-blue-intense-fg ansi-bold">train: </span>Scanning &#39;/content/datasets/FaceTopHalf-1/train/labels&#39; images and labels...984 found, 0 missing, 0 empty, 0 corrupted: 100% 984/984 [00:00&lt;00:00, 2089.91it/s]
+<span class="ansi-blue-intense-fg ansi-bold">train: </span>New cache created: /content/datasets/FaceTopHalf-1/train/labels.cache
+<span class="ansi-blue-intense-fg ansi-bold">train: </span>Caching images (0.5GB ram): 100% 984/984 [00:02&lt;00:00, 353.59it/s]
+<span class="ansi-blue-intense-fg ansi-bold">val: </span>Scanning &#39;/content/datasets/FaceTopHalf-1/valid/labels&#39; images and labels...94 found, 0 missing, 0 empty, 0 corrupted: 100% 94/94 [00:00&lt;00:00, 982.98it/s]
+<span class="ansi-blue-intense-fg ansi-bold">val: </span>New cache created: /content/datasets/FaceTopHalf-1/valid/labels.cache
+<span class="ansi-blue-intense-fg ansi-bold">val: </span>Caching images (0.0GB ram): 100% 94/94 [00:00&lt;00:00, 225.31it/s]
+Plotting labels to runs/train/exp/labels.jpg... 
+
+<span class="ansi-blue-intense-fg ansi-bold">AutoAnchor: </span>4.70 anchors/target, 1.000 Best Possible Recall (BPR). Current anchors are a good fit to dataset ✅
+Image sizes 416 train, 416 val
+Using 2 dataloader workers
+Logging results to <span class="ansi-bold">runs/train/exp</span>
+Starting training for 50 epochs...
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      0/49      5.5G    0.1105   0.01924         0        45       416: 100% 16/16 [00:11&lt;00:00,  1.43it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.26it/s]
+                 all         94         94     0.0201      0.543     0.0178    0.00263
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      1/49     6.11G   0.07563   0.02254         0        51       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.37it/s]
+                 all         94         94     0.0162       0.84     0.0165    0.00298
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      2/49     6.11G   0.06315   0.02294         0        40       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.52it/s]
+                 all         94         94      0.383       0.84       0.47     0.0996
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      3/49     6.11G   0.05527   0.02213         0        57       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.41it/s]
+                 all         94         94      0.651      0.787      0.782      0.322
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      4/49     6.11G   0.05149   0.01992         0        60       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.54it/s]
+                 all         94         94      0.823      0.889      0.877       0.39
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      5/49     6.11G   0.04983   0.01781         0        49       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.72it/s]
+                 all         94         94      0.938          1      0.981      0.502
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      6/49     6.11G   0.04696   0.01725         0        49       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.78it/s]
+                 all         94         94          1          1      0.995      0.513
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      7/49     6.11G   0.04683   0.01594         0        47       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.75it/s]
+                 all         94         94      0.683      0.755      0.682      0.107
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      8/49     6.11G   0.04272    0.0154         0        42       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.88it/s]
+                 all         94         94          1          1      0.995      0.625
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+      9/49     6.11G   0.04385    0.0139         0        44       416: 100% 16/16 [00:09&lt;00:00,  1.76it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.87it/s]
+                 all         94         94      0.959          1      0.978      0.328
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     10/49     6.11G   0.04173   0.01353         0        45       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.83it/s]
+                 all         94         94      0.989      0.989      0.995      0.722
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     11/49     6.11G   0.03871   0.01273         0        45       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.87it/s]
+                 all         94         94          1          1      0.995      0.585
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     12/49     6.11G   0.03793   0.01217         0        44       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.78it/s]
+                 all         94         94          1          1      0.995      0.581
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     13/49     6.11G   0.03639   0.01135         0        40       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.81it/s]
+                 all         94         94      0.989          1      0.994      0.818
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     14/49     6.11G   0.03534   0.01106         0        49       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.85it/s]
+                 all         94         94          1          1      0.995       0.66
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     15/49     6.11G   0.03296   0.01008         0        47       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.89it/s]
+                 all         94         94          1          1      0.995      0.859
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     16/49     6.11G   0.03325   0.01045         0        52       416: 100% 16/16 [00:08&lt;00:00,  1.80it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.98it/s]
+                 all         94         94          1          1      0.995      0.839
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     17/49     6.11G   0.03212  0.009619         0        41       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.81it/s]
+                 all         94         94          1          1      0.995      0.697
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     18/49     6.11G   0.03133   0.00924         0        40       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.87it/s]
+                 all         94         94          1          1      0.995      0.726
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     19/49     6.11G   0.02999  0.008853         0        44       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.94it/s]
+                 all         94         94          1          1      0.995      0.812
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     20/49     6.11G   0.02992  0.008704         0        45       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.93it/s]
+                 all         94         94          1          1      0.995      0.674
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     21/49     6.11G   0.02985  0.008711         0        44       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.84it/s]
+                 all         94         94          1          1      0.995      0.823
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     22/49     6.11G   0.02831  0.008513         0        49       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.79it/s]
+                 all         94         94          1          1      0.995      0.812
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     23/49     6.11G   0.02702  0.008115         0        41       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.84it/s]
+                 all         94         94          1          1      0.995      0.781
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     24/49     6.11G   0.02657  0.007724         0        42       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.87it/s]
+                 all         94         94          1          1      0.995      0.894
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     25/49     6.11G   0.02479  0.007864         0        54       416: 100% 16/16 [00:08&lt;00:00,  1.80it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.92it/s]
+                 all         94         94          1          1      0.995      0.882
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     26/49     6.11G   0.02562  0.007568         0        44       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.93it/s]
+                 all         94         94          1          1      0.995      0.777
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     27/49     6.11G   0.02513  0.007555         0        52       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.97it/s]
+                 all         94         94          1          1      0.995      0.904
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     28/49     6.11G   0.02401   0.00738         0        47       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.94it/s]
+                 all         94         94          1          1      0.995      0.792
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     29/49     6.11G   0.02263  0.007241         0        42       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.82it/s]
+                 all         94         94          1          1      0.995      0.874
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     30/49     6.11G   0.02269  0.006998         0        44       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.94it/s]
+                 all         94         94          1          1      0.995      0.868
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     31/49     6.11G   0.02181  0.006771         0        51       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.86it/s]
+                 all         94         94          1          1      0.995      0.847
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     32/49     6.11G   0.02178  0.006778         0        50       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.91it/s]
+                 all         94         94          1          1      0.995      0.871
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     33/49     6.11G   0.02028  0.006674         0        49       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.99it/s]
+                 all         94         94          1          1      0.995       0.82
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     34/49     6.11G   0.01983  0.006518         0        43       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.90it/s]
+                 all         94         94          1          1      0.995        0.9
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     35/49     6.11G   0.01898  0.006215         0        53       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.92it/s]
+                 all         94         94          1          1      0.995      0.828
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     36/49     6.11G   0.02061  0.006484         0        46       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.90it/s]
+                 all         94         94          1          1      0.995      0.884
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     37/49     6.11G   0.01877  0.006318         0        42       416: 100% 16/16 [00:08&lt;00:00,  1.80it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.91it/s]
+                 all         94         94          1          1      0.995      0.893
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     38/49     6.11G   0.01814  0.006021         0        40       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  2.01it/s]
+                 all         94         94          1          1      0.995      0.896
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     39/49     6.11G   0.01678  0.006206         0        42       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.90it/s]
+                 all         94         94          1          1      0.995      0.875
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     40/49     6.11G   0.01631  0.005956         0        46       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.89it/s]
+                 all         94         94          1          1      0.995      0.883
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     41/49     6.11G   0.01625  0.005951         0        44       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.84it/s]
+                 all         94         94          1          1      0.995      0.898
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     42/49     6.11G   0.01535  0.005612         0        55       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.94it/s]
+                 all         94         94          1          1      0.995      0.887
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     43/49     6.11G   0.01516  0.005493         0        41       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.99it/s]
+                 all         94         94          1          1      0.995      0.832
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     44/49     6.11G   0.01539  0.005533         0        50       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.81it/s]
+                 all         94         94          1          1      0.995      0.902
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     45/49     6.11G   0.01494  0.005803         0        50       416: 100% 16/16 [00:08&lt;00:00,  1.78it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.91it/s]
+                 all         94         94          1          1      0.995      0.881
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     46/49     6.11G   0.01454  0.005557         0        40       416: 100% 16/16 [00:08&lt;00:00,  1.80it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  2.01it/s]
+                 all         94         94          1          1      0.995      0.896
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     47/49     6.11G   0.01448  0.005342         0        43       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.87it/s]
+                 all         94         94          1          1      0.995      0.881
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     48/49     6.11G   0.01384  0.005472         0        48       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.82it/s]
+                 all         94         94          1          1      0.995      0.895
+
+     Epoch   gpu_mem       box       obj       cls    labels  img_size
+     49/49     6.11G   0.01425  0.005403         0        41       416: 100% 16/16 [00:08&lt;00:00,  1.79it/s]
+               Class     Images     Labels          P          R     mAP@.5 mAP@.5:.95: 100% 1/1 [00:00&lt;00:00,  1.92it/s]
+                 all         94         94          1          1      0.995      0.893
+
+50 epochs completed in 0.133 hours.
+Optimizer stripped from runs/train/exp/weights/last.pt, 14.3MB
+Results saved to <span class="ansi-bold">runs/train/exp</span>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Tensorboard-data---load-after-runs">Tensorboard data - load after runs<a class="anchor-link" href="#Tensorboard-data---load-after-runs">&#182;</a></h1>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="c1"># Load the TensorBoard notebook extension</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Start tensorboard</span>
+<span class="c1"># Launch after you have started the training </span>
+<span class="c1"># Logs save in the folder &quot;runs&quot;</span>
 <span class="o">%</span><span class="n">load_ext</span> <span class="n">tensorboard</span>
-<span class="o">%</span><span class="n">tensorboard</span> <span class="o">--</span><span class="n">logdir</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">drive</span><span class="o">/</span><span class="n">MyDrive</span><span class="o">/</span><span class="n">FaceTopHalfDetection</span><span class="o">/</span><span class="n">tophalfdatasettiny</span><span class="o">/</span><span class="n">logs</span>
+<span class="o">%</span><span class="n">tensorboard</span> <span class="o">--</span><span class="n">logdir</span> <span class="n">runs</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>Output hidden; open in https://colab.research.google.com to view.</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Check-Inference">Check Inference<a class="anchor-link" href="#Check-Inference">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">testPath</span> <span class="o">=</span> <span class="s2">&quot;/content/datasets/FaceTopHalf-1/valid/images&quot;</span>
+<span class="n">weightPath</span> <span class="o">=</span> <span class="s2">&quot;/content/yolov5/runs/train/exp/weights/last.pt&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Test-on-single-image">Test on single image<a class="anchor-link" href="#Test-on-single-image">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">trainedmodel</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;/content/yolov5&#39;</span><span class="p">,</span> <span class="s1">&#39;custom&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">weightPath</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>  <span class="c1"># local repo</span>
+<span class="n">img</span> <span class="o">=</span> <span class="s1">&#39;/content/drive/MyDrive/IdentityRecognitionTestFiles/testImage.jpg&#39;</span>
 </pre></div>
 
     </div>
@@ -13209,7 +13959,310 @@
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">trainModel</span><span class="p">()</span>
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Inference</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">trainedmodel</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+<span class="c1"># Results</span>
+<span class="n">results</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>  <span class="c1"># or .show(), .save(), .crop(), .pandas(), etc.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Saved 1 image to <span class="ansi-bold">runs/detect/exp</span>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Test-on-test-folder">Test on test folder<a class="anchor-link" href="#Test-on-test-folder">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1">## inference or detection on new images with test area</span>
+<span class="err">!</span><span class="n">python</span> <span class="n">detect</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">source</span> <span class="p">{</span><span class="n">testPath</span><span class="p">}</span> <span class="o">--</span><span class="n">weights</span> <span class="p">{</span><span class="n">weightPath</span><span class="p">}</span> <span class="o">--</span><span class="n">img</span> <span class="mi">416</span> <span class="o">--</span><span class="n">save</span><span class="o">-</span><span class="n">txt</span> <span class="o">--</span><span class="n">save</span><span class="o">-</span><span class="n">conf</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-blue-intense-fg ansi-bold">detect: </span>weights=[&#39;/content/yolov5/runs/train/exp/weights/last.pt&#39;], source=/content/datasets/FaceTopHalf-1/valid/images, imgsz=[416, 416], conf_thres=0.25, iou_thres=0.45, max_det=1000, device=, view_img=False, save_txt=True, save_conf=True, save_crop=False, nosave=False, classes=None, agnostic_nms=False, augment=False, visualize=False, update=False, project=runs/detect, name=exp, exist_ok=False, line_thickness=3, hide_labels=False, hide_conf=False, half=False, dnn=False
+YOLOv5 🚀 v6.0-113-g5ca5dd4 torch 1.10.0+cu111 CUDA:0 (Tesla P100-PCIE-16GB, 16281MiB)
+
+Fusing layers... 
+Model Summary: 213 layers, 7012822 parameters, 0 gradients, 15.8 GFLOPs
+image 1/94 /content/datasets/FaceTopHalf-1/valid/images/frame100_jpg.rf.70e61c3b0f1abddca6cabf1918469e88.jpg: 416x416 1 0, Done. (0.006s)
+image 2/94 /content/datasets/FaceTopHalf-1/valid/images/frame118_jpg.rf.185d20cdc961800c485838ea36f44564.jpg: 416x416 1 0, Done. (0.006s)
+image 3/94 /content/datasets/FaceTopHalf-1/valid/images/frame122_jpg.rf.1e0e56dff30955951091c5774ba463db.jpg: 416x416 1 0, Done. (0.006s)
+image 4/94 /content/datasets/FaceTopHalf-1/valid/images/frame134_jpg.rf.57e5782943f38ba83cd4105eb58796d6.jpg: 416x416 1 0, Done. (0.006s)
+image 5/94 /content/datasets/FaceTopHalf-1/valid/images/frame138_jpg.rf.b106984b470deab1b10a9eca3a0c524b.jpg: 416x416 1 0, Done. (0.006s)
+image 6/94 /content/datasets/FaceTopHalf-1/valid/images/frame140_jpg.rf.29ade1064de4cfcac209c001b34c884e.jpg: 416x416 1 0, Done. (0.006s)
+image 7/94 /content/datasets/FaceTopHalf-1/valid/images/frame146_jpg.rf.f32317ff146ce608d67430980471703a.jpg: 416x416 1 0, Done. (0.006s)
+image 8/94 /content/datasets/FaceTopHalf-1/valid/images/frame149_jpg.rf.8d79f3f50f7049419a5f020fd3082bd3.jpg: 416x416 1 0, Done. (0.010s)
+image 9/94 /content/datasets/FaceTopHalf-1/valid/images/frame150_jpg.rf.2c55fa84f8c7d314368e021f4b7ac225.jpg: 416x416 1 0, Done. (0.007s)
+image 10/94 /content/datasets/FaceTopHalf-1/valid/images/frame152_jpg.rf.1ae7bbf7740f7efdc8ac171dfc8abcf2.jpg: 416x416 1 0, Done. (0.007s)
+image 11/94 /content/datasets/FaceTopHalf-1/valid/images/frame159_jpg.rf.9b70dc7eef3b0f5e18e09353e7b49b25.jpg: 416x416 1 0, Done. (0.007s)
+image 12/94 /content/datasets/FaceTopHalf-1/valid/images/frame173_jpg.rf.24d876b0d75131a420624a52863978b8.jpg: 416x416 1 0, Done. (0.006s)
+image 13/94 /content/datasets/FaceTopHalf-1/valid/images/frame179_jpg.rf.2c79d9505574f229a91a38a224ba5cec.jpg: 416x416 1 0, Done. (0.007s)
+image 14/94 /content/datasets/FaceTopHalf-1/valid/images/frame182_jpg.rf.b4a85808213115509c74b31fb79bb7bf.jpg: 416x416 1 0, Done. (0.006s)
+image 15/94 /content/datasets/FaceTopHalf-1/valid/images/frame197_jpg.rf.c8c8e7c9a4566525de7661f28b3b8156.jpg: 416x416 1 0, Done. (0.006s)
+image 16/94 /content/datasets/FaceTopHalf-1/valid/images/frame203_jpg.rf.1261a3a2d7015858c68a22d84eaed7dc.jpg: 416x416 1 0, Done. (0.007s)
+image 17/94 /content/datasets/FaceTopHalf-1/valid/images/frame205_jpg.rf.c078c648811e6b40104ecd3eb4f7f471.jpg: 416x416 1 0, Done. (0.008s)
+image 18/94 /content/datasets/FaceTopHalf-1/valid/images/frame222_jpg.rf.39b8100f53b3f9b1fe7835bfd0598a00.jpg: 416x416 1 0, Done. (0.007s)
+image 19/94 /content/datasets/FaceTopHalf-1/valid/images/frame236_jpg.rf.00237b13e4c5a6702ae8a8497f7c3124.jpg: 416x416 1 0, Done. (0.008s)
+image 20/94 /content/datasets/FaceTopHalf-1/valid/images/frame242_jpg.rf.5a68e44addb8ca76c3755c574f3ef057.jpg: 416x416 1 0, Done. (0.008s)
+image 21/94 /content/datasets/FaceTopHalf-1/valid/images/frame246_jpg.rf.054c249c2c8fe34ef93404092e86e15e.jpg: 416x416 1 0, Done. (0.008s)
+image 22/94 /content/datasets/FaceTopHalf-1/valid/images/frame24_jpg.rf.abe7b9c8d992e32c23b7cb137f0498c5.jpg: 416x416 1 0, Done. (0.010s)
+image 23/94 /content/datasets/FaceTopHalf-1/valid/images/frame255_jpg.rf.39c333a136c18031f8e9a92d97151bf2.jpg: 416x416 1 0, Done. (0.006s)
+image 24/94 /content/datasets/FaceTopHalf-1/valid/images/frame258_jpg.rf.2c45b043753238a6a05d13fece5cb223.jpg: 416x416 1 0, Done. (0.006s)
+image 25/94 /content/datasets/FaceTopHalf-1/valid/images/frame266_jpg.rf.a2b5facb4167758143df5efa39716bfc.jpg: 416x416 1 0, Done. (0.007s)
+image 26/94 /content/datasets/FaceTopHalf-1/valid/images/frame267_jpg.rf.d5e541cb2e47ff858987b8bbf848d03a.jpg: 416x416 1 0, Done. (0.006s)
+image 27/94 /content/datasets/FaceTopHalf-1/valid/images/frame270_jpg.rf.2fac40f8cda98589d911948820a99abf.jpg: 416x416 1 0, Done. (0.006s)
+image 28/94 /content/datasets/FaceTopHalf-1/valid/images/frame273_jpg.rf.5c7e6674954106d98bc492e401c9310e.jpg: 416x416 1 0, Done. (0.006s)
+image 29/94 /content/datasets/FaceTopHalf-1/valid/images/frame281_jpg.rf.cca276e32a05fdbd5e157686751bcd78.jpg: 416x416 1 0, Done. (0.006s)
+image 30/94 /content/datasets/FaceTopHalf-1/valid/images/frame285_jpg.rf.936ccfc189f6ff2fa0561c663b8b3221.jpg: 416x416 1 0, Done. (0.006s)
+image 31/94 /content/datasets/FaceTopHalf-1/valid/images/frame292_jpg.rf.68b97d558818028c5e1c9f7825bd3cec.jpg: 416x416 1 0, Done. (0.006s)
+image 32/94 /content/datasets/FaceTopHalf-1/valid/images/frame294_jpg.rf.8f60b3412986577278463e45b782c6b4.jpg: 416x416 1 0, Done. (0.007s)
+image 33/94 /content/datasets/FaceTopHalf-1/valid/images/frame296_jpg.rf.0d35e0c9e4970bf3c3f68eddcfaad6f6.jpg: 416x416 1 0, Done. (0.006s)
+image 34/94 /content/datasets/FaceTopHalf-1/valid/images/frame301_jpg.rf.271607b6c88fdcf4554bf42569d887b2.jpg: 416x416 1 0, Done. (0.006s)
+image 35/94 /content/datasets/FaceTopHalf-1/valid/images/frame306_jpg.rf.dbe988c08b4af6b1e2d02192115d4cf8.jpg: 416x416 1 0, Done. (0.006s)
+image 36/94 /content/datasets/FaceTopHalf-1/valid/images/frame309_jpg.rf.d69e24c45375963a23705dfce3576913.jpg: 416x416 1 0, Done. (0.008s)
+image 37/94 /content/datasets/FaceTopHalf-1/valid/images/frame30_jpg.rf.499adc8ba662d3c4dd5de1da9f68ab80.jpg: 416x416 1 0, Done. (0.006s)
+image 38/94 /content/datasets/FaceTopHalf-1/valid/images/frame314_jpg.rf.6939d9862914a62207e2946cb902ae89.jpg: 416x416 1 0, Done. (0.006s)
+image 39/94 /content/datasets/FaceTopHalf-1/valid/images/frame316_jpg.rf.b80352b51f18749b923e056515e91053.jpg: 416x416 1 0, Done. (0.007s)
+image 40/94 /content/datasets/FaceTopHalf-1/valid/images/frame318_jpg.rf.423f0ce57be31879df2c0afb90f81c35.jpg: 416x416 1 0, Done. (0.009s)
+image 41/94 /content/datasets/FaceTopHalf-1/valid/images/frame319_jpg.rf.db8f926c7724c2434531e0a2c2a1ee8d.jpg: 416x416 1 0, Done. (0.009s)
+image 42/94 /content/datasets/FaceTopHalf-1/valid/images/frame324_jpg.rf.473f75c2cefe08f36862b0748e86ea15.jpg: 416x416 1 0, Done. (0.006s)
+image 43/94 /content/datasets/FaceTopHalf-1/valid/images/frame325_jpg.rf.12648e3ba98a546343fd83f497770ec3.jpg: 416x416 1 0, Done. (0.006s)
+image 44/94 /content/datasets/FaceTopHalf-1/valid/images/frame328_jpg.rf.4a2a1e0d94abd35070a5dd511f6869f6.jpg: 416x416 1 0, Done. (0.006s)
+image 45/94 /content/datasets/FaceTopHalf-1/valid/images/frame330_jpg.rf.de561e8b765c972c0f5bff11423cfd7a.jpg: 416x416 1 0, Done. (0.006s)
+image 46/94 /content/datasets/FaceTopHalf-1/valid/images/frame334_jpg.rf.fa3aedd120393b74e992a25489b43a41.jpg: 416x416 1 0, Done. (0.006s)
+image 47/94 /content/datasets/FaceTopHalf-1/valid/images/frame338_jpg.rf.976c44836a68d108b24263aacf17c628.jpg: 416x416 1 0, Done. (0.008s)
+image 48/94 /content/datasets/FaceTopHalf-1/valid/images/frame344_jpg.rf.5ed63a30818ad75ee91b3832cab9dbb9.jpg: 416x416 1 0, Done. (0.006s)
+image 49/94 /content/datasets/FaceTopHalf-1/valid/images/frame349_jpg.rf.ec00530eeb762708a96ab9306678a92d.jpg: 416x416 1 0, Done. (0.006s)
+image 50/94 /content/datasets/FaceTopHalf-1/valid/images/frame350_jpg.rf.12c4aa895808a1191382f987961a6d21.jpg: 416x416 1 0, Done. (0.007s)
+image 51/94 /content/datasets/FaceTopHalf-1/valid/images/frame352_jpg.rf.3ccd716cac36fc907a77b7f5fba21c5c.jpg: 416x416 1 0, Done. (0.006s)
+image 52/94 /content/datasets/FaceTopHalf-1/valid/images/frame353_jpg.rf.efa69fcd4fbfee03b04dfb3623067c7d.jpg: 416x416 1 0, Done. (0.007s)
+image 53/94 /content/datasets/FaceTopHalf-1/valid/images/frame355_jpg.rf.29f6ee2773fedbe2ec0edcbf685ccfdc.jpg: 416x416 1 0, Done. (0.006s)
+image 54/94 /content/datasets/FaceTopHalf-1/valid/images/frame360_jpg.rf.f6777c99a55e09274085f2fa93b8bcac.jpg: 416x416 1 0, Done. (0.006s)
+image 55/94 /content/datasets/FaceTopHalf-1/valid/images/frame364_jpg.rf.85924c72707a1ec1e7ce2da1286c5ed7.jpg: 416x416 1 0, Done. (0.009s)
+image 56/94 /content/datasets/FaceTopHalf-1/valid/images/frame366_jpg.rf.a000e062e13e39996405d9b1937f1a9d.jpg: 416x416 1 0, Done. (0.006s)
+image 57/94 /content/datasets/FaceTopHalf-1/valid/images/frame379_jpg.rf.f3d7019e4e46bcd60b498228f91c3061.jpg: 416x416 1 0, Done. (0.006s)
+image 58/94 /content/datasets/FaceTopHalf-1/valid/images/frame386_jpg.rf.8c3f4f56416deb2506064f7b311acb29.jpg: 416x416 1 0, Done. (0.007s)
+image 59/94 /content/datasets/FaceTopHalf-1/valid/images/frame389_jpg.rf.b48b2b027001f05bc92c9da7a6abff1f.jpg: 416x416 1 0, Done. (0.006s)
+image 60/94 /content/datasets/FaceTopHalf-1/valid/images/frame392_jpg.rf.eedf4bd1b19685ed3f27d5887fb5a4b6.jpg: 416x416 1 0, Done. (0.006s)
+image 61/94 /content/datasets/FaceTopHalf-1/valid/images/frame395_jpg.rf.1b41468d1754f5613f7fce0c51b65fff.jpg: 416x416 1 0, Done. (0.006s)
+image 62/94 /content/datasets/FaceTopHalf-1/valid/images/frame397_jpg.rf.b1a4441735a9ad444e9ae2da8c0d7ff2.jpg: 416x416 1 0, Done. (0.006s)
+image 63/94 /content/datasets/FaceTopHalf-1/valid/images/frame39_jpg.rf.975d9243d7ef44a8ba106c70a8c459e0.jpg: 416x416 1 0, Done. (0.006s)
+image 64/94 /content/datasets/FaceTopHalf-1/valid/images/frame416_jpg.rf.24934f91d2327d9e1e78a59d4abc1dd6.jpg: 416x416 1 0, Done. (0.009s)
+image 65/94 /content/datasets/FaceTopHalf-1/valid/images/frame422_jpg.rf.d08bf4d3450ab0c0462ef57604610336.jpg: 416x416 1 0, Done. (0.007s)
+image 66/94 /content/datasets/FaceTopHalf-1/valid/images/frame427_jpg.rf.3e73e8a6ab39b0bdd522410196bb1dc5.jpg: 416x416 1 0, Done. (0.006s)
+image 67/94 /content/datasets/FaceTopHalf-1/valid/images/frame430_jpg.rf.402ad7a14c9a36f6517ed3d7bffe8587.jpg: 416x416 1 0, Done. (0.006s)
+image 68/94 /content/datasets/FaceTopHalf-1/valid/images/frame431_jpg.rf.adeec3ec3c182996a01dea31ff70a025.jpg: 416x416 1 0, Done. (0.006s)
+image 69/94 /content/datasets/FaceTopHalf-1/valid/images/frame434_jpg.rf.285adf14e240a41993079cfe4c73136a.jpg: 416x416 1 0, Done. (0.006s)
+image 70/94 /content/datasets/FaceTopHalf-1/valid/images/frame435_jpg.rf.b94808e662d88d075d42d4560054a9b5.jpg: 416x416 1 0, Done. (0.006s)
+image 71/94 /content/datasets/FaceTopHalf-1/valid/images/frame436_jpg.rf.3031fdcb5876a65cc8fb071b5bb148af.jpg: 416x416 1 0, Done. (0.007s)
+image 72/94 /content/datasets/FaceTopHalf-1/valid/images/frame445_jpg.rf.67917e4469de8b050cc46c7cc4e591c9.jpg: 416x416 1 0, Done. (0.006s)
+image 73/94 /content/datasets/FaceTopHalf-1/valid/images/frame447_jpg.rf.227bbd6cb90dbfb30348848618cf25ae.jpg: 416x416 1 0, Done. (0.008s)
+image 74/94 /content/datasets/FaceTopHalf-1/valid/images/frame448_jpg.rf.092290c688b04fde0181a1d27c8b2087.jpg: 416x416 1 0, Done. (0.007s)
+image 75/94 /content/datasets/FaceTopHalf-1/valid/images/frame451_jpg.rf.397cb6b72892c624983fd5f6af676f43.jpg: 416x416 1 0, Done. (0.009s)
+image 76/94 /content/datasets/FaceTopHalf-1/valid/images/frame458_jpg.rf.ac47cef7ca25eb7ff9deaa2b0480fd33.jpg: 416x416 1 0, Done. (0.007s)
+image 77/94 /content/datasets/FaceTopHalf-1/valid/images/frame47_jpg.rf.af20438305ca671d64bedce1127e2101.jpg: 416x416 1 0, Done. (0.006s)
+image 78/94 /content/datasets/FaceTopHalf-1/valid/images/frame48_jpg.rf.e94386d560b7c945762ceb5e3d30a98f.jpg: 416x416 1 0, Done. (0.009s)
+image 79/94 /content/datasets/FaceTopHalf-1/valid/images/frame49_jpg.rf.73a6944906c3aad18b220edd6a6b4b3c.jpg: 416x416 1 0, Done. (0.006s)
+image 80/94 /content/datasets/FaceTopHalf-1/valid/images/frame55_jpg.rf.8b89a98d5dfc9003706365129bca7f18.jpg: 416x416 1 0, Done. (0.006s)
+image 81/94 /content/datasets/FaceTopHalf-1/valid/images/frame66_jpg.rf.a1d15f07f21404f033538394de45d9f2.jpg: 416x416 1 0, Done. (0.006s)
+image 82/94 /content/datasets/FaceTopHalf-1/valid/images/frame72_jpg.rf.4448f3ddc7734874c5cd1c1f62f7781c.jpg: 416x416 1 0, Done. (0.006s)
+image 83/94 /content/datasets/FaceTopHalf-1/valid/images/frame73_jpg.rf.6f32c32944ba7ff935cbee1e934d529c.jpg: 416x416 1 0, Done. (0.006s)
+image 84/94 /content/datasets/FaceTopHalf-1/valid/images/frame80_jpg.rf.3baf704b2df6f01bd521473234f01a0f.jpg: 416x416 1 0, Done. (0.006s)
+image 85/94 /content/datasets/FaceTopHalf-1/valid/images/frame84_jpg.rf.9af6bfa6d8babf3cde4ff732f088571b.jpg: 416x416 1 0, Done. (0.007s)
+image 86/94 /content/datasets/FaceTopHalf-1/valid/images/frame85_jpg.rf.c1add1b84ebf34b65653a462e5ca43fa.jpg: 416x416 1 0, Done. (0.008s)
+image 87/94 /content/datasets/FaceTopHalf-1/valid/images/frame88_jpg.rf.d8c1098e193327c9f4496c65da50b093.jpg: 416x416 1 0, Done. (0.006s)
+image 88/94 /content/datasets/FaceTopHalf-1/valid/images/frame8_jpg.rf.75c917b76821da8d3f72062ad96a95db.jpg: 416x416 1 0, Done. (0.007s)
+image 89/94 /content/datasets/FaceTopHalf-1/valid/images/frame90_jpg.rf.65908731d082fad96e758608b8ac37d7.jpg: 416x416 1 0, Done. (0.008s)
+image 90/94 /content/datasets/FaceTopHalf-1/valid/images/frame92_jpg.rf.8da938bf4941e628a69b2b78023f68d0.jpg: 416x416 1 0, Done. (0.008s)
+image 91/94 /content/datasets/FaceTopHalf-1/valid/images/frame93_jpg.rf.8e501077b26f4dd4a79b6f60431e59fd.jpg: 416x416 1 0, Done. (0.008s)
+image 92/94 /content/datasets/FaceTopHalf-1/valid/images/frame96_jpg.rf.4f39b682d387f967954b767e599f7a56.jpg: 416x416 1 0, Done. (0.008s)
+image 93/94 /content/datasets/FaceTopHalf-1/valid/images/frame97_jpg.rf.32b60a50dcd0f583246c121255b462cc.jpg: 416x416 1 0, Done. (0.008s)
+image 94/94 /content/datasets/FaceTopHalf-1/valid/images/frame98_jpg.rf.db9d36b115d1e2b906d7151f5f47ccea.jpg: 416x416 1 0, Done. (0.008s)
+Speed: 0.3ms pre-process, 6.8ms inference, 0.8ms NMS per image at shape (1, 3, 416, 416)
+Results saved to <span class="ansi-bold">runs/detect/exp2</span>
+94 labels saved to runs/detect/exp2/labels
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Show-test-results-for-test-folder">Show test results for test folder<a class="anchor-link" href="#Show-test-results-for-test-folder">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">display</span>
+
+<span class="k">for</span> <span class="n">imageName</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;/content/yolov5/runs/detect/exp2/*.jpg&quot;</span><span class="p">):</span> <span class="c1">#assume JPG file</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">imageName</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Download weights from exp folder under yolov5 runs in Colab&#39;s side panel</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="029fc6fb-5ff8-4b99-9705-c069be251ae6"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#029fc6fb-5ff8-4b99-9705-c069be251ae6');
+
+    async function download(id, filename, size) {
+      if (!google.colab.kernel.accessAllowed) {
+        return;
+      }
+      const div = document.createElement('div');
+      const label = document.createElement('label');
+      label.textContent = `Downloading "${filename}": `;
+      div.appendChild(label);
+      const progress = document.createElement('progress');
+      progress.max = size;
+      div.appendChild(progress);
+      document.body.appendChild(div);
+
+      const buffers = [];
+      let downloaded = 0;
+
+      const channel = await google.colab.kernel.comms.open(id);
+      // Send a message to notify the kernel that we're ready.
+      channel.send({})
+
+      for await (const message of channel.messages) {
+        // Send a message to notify the kernel that we're ready.
+        channel.send({})
+        if (message.buffers) {
+          for (const buffer of message.buffers) {
+            buffers.push(buffer);
+            downloaded += buffer.byteLength;
+            progress.value = downloaded;
+          }
+        }
+      }
+      const blob = new Blob(buffers, {type: 'application/binary'});
+      const a = document.createElement('a');
+      a.href = window.URL.createObjectURL(blob);
+      a.download = filename;
+      div.appendChild(a);
+      a.click();
+      div.remove();
+    }
+  
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="ad480942-06e8-426f-813d-930e094fd95b"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#ad480942-06e8-426f-813d-930e094fd95b');
+download("download_6aa391f3-95aa-46bb-a121-0a7f40fb7656", "last.pt", 14294325)
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="OPTIONAL!!!-Retrain-the-model-from-the-last-saved-weight-for-better-results"><strong>OPTIONAL!!!</strong> Retrain the model from the last saved weight for better results<a class="anchor-link" href="#OPTIONAL!!!-Retrain-the-model-from-the-last-saved-weight-for-better-results">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">img</span> <span class="mi">416</span> <span class="o">--</span><span class="n">batch</span> <span class="mi">8</span> <span class="o">--</span><span class="n">epochs</span> <span class="mi">150</span> <span class="o">--</span><span class="n">data</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">drive</span><span class="o">/</span><span class="n">MyDrive</span><span class="o">/</span><span class="n">Identity_Recognition</span><span class="o">/</span><span class="n">face_mask_detection</span><span class="o">/</span><span class="n">dataset</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">weights</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">yolov5</span><span class="o">/</span><span class="n">runs</span><span class="o">/</span><span class="n">train</span><span class="o">/</span><span class="n">exp</span><span class="o">/</span><span class="n">weights</span><span class="o">/</span><span class="n">last</span><span class="o">.</span><span class="n">pt</span>
 </pre></div>
 
     </div>
