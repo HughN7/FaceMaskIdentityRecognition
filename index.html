@@ -13083,16 +13083,33 @@
 	</head>
 	
 	<body>
-		<div class="topnav">
-			<a class="active" href="index.html">Home</a>
-			<a href="pages/maskDetect.html">Mask Detection</a>
-			<a href="pages/eye.html">Eye Detection</a>
-			<a href="pages/topFace.html">Top Half Face</a>
-			<a href="pages/wholeFace.html">Whole Face</a>
-			<a href="pages/demoResults.html">Demo Notebook</a>
-			<a class="git" href="https://github.com/HughN7/FaceMaskIdentityRecognition" target="_blank">GitHub</a>
-		</div>
-		<h2 style="text-align: center">Home</h2>
-		<h5 style="padding-left:16px">The top navigation bar contains the Jupyter notebook for the different models we used and trained per different focuses.</h5>
+		<div class="topnav"><a class="active" href="index.html">Home</a> <a href="pages/maskDetect.html">Mask Detection</a> <a href="pages/eye.html">Eye Detection</a> <a href="pages/topFace.html">Top Half Face</a> <a href="pages/wholeFace.html">Whole Face</a> <a href="pages/demoResults.html">Demo Notebook</a> <a class="git" href="https://github.com/HughN7/FaceMaskIdentityRecognition" target="_blank" rel="noopener">GitHub</a></div>
+			<h2 style="text-align: center;">Welcome to the Face Mask Identity Recognition Project!</h2>
+			<p>&nbsp;</p>
+			<h3>Intro</h3>
+			<p>The top navigation bar contains the Jupyter notebook for the different models we used and trained per different focuses. It also includes our notebooks run on each of our team member's faces as tests.&nbsp;</p>
+			<p>The project's goal is to:</p>
+			<ul>
+			<li>Identify if a person has a mask on or not and...</li>
+			<li>if they have a mask on, attempt to identify who they are underneath the mask</li>
+			</ul>
+			<p>In general, this project was motivated by the COVID-19 pandemic where many people who use facial biometric authentication to login to their device would find that it was no longer dependable because of face mask requirements.&nbsp;</p>
+			<p>Therefore this project also aims to somewhat simulate this by training our models on an single face (Our team member Hieu) and try to test the recognition of his face with a mask and to test against people that are not him (Our other team members; Dean, Madelyne and Hewan) as if there was a foreign/bad actor trying to "log into" the system with facial biometric authentication.&nbsp;</p>
+			<p>Currently we are using the YOLO machine learning algorithm to train the individual faces as custom objects. Initially we used YOLOv3 although because of Colaboratory's Free Tier limitations, we had to split the model into separate models with single labels and moved to YOLOv5 because of it's flexible weight options and leaner API.&nbsp;</p>
+			<h3>Technologies Used</h3>
+			<ul>
+			<li>Github (of course)</li>
+			<li>Python for usage in the jupyter notebooks</li>
+			<li>Roboflow to prepare training data</li>
+			<li>Google Colaboratory to train the data</li>
+			</ul>
+			<h3>Demo Video</h3>
+			<p><video controls="controls" width="300" height="150">
+			<source src="demoVideo.mp4" type="video/mp4" /></video></p>
+			<h3>Quick Summary of Results</h3>
+			<p>Testing against our faces we see that Hieu, who the model was trained on was recognized him as 88% which isn't bad!</p>
+			<p>For the "bad actors", Dean showed up as a probability of 58.73%. Madelyne was at 68% and Hewan was at 69%. This is a pretty good showing since it the system can mostly distinguish people.&nbsp;</p>
+			<p><span style="text-decoration: underline;">However,</span><strong>&nbsp;</strong><span style="font-weight: 400;">People with similar facial structures to the trained person will be &ldquo;authenticated&rdquo; as them such as siblings or twins.&nbsp;<span style="text-decoration: underline;">But</span>, the t</span><span style="font-weight: 400;">raining data is purely on series of images (video frames). No depth data, dot projection, etc.&nbsp;</span><span style="font-weight: 400;">In theory it could be improved with secondary data/sensors or entirely different algorithm. <em>But this is out of scope for our undergraduate project.&nbsp;</em></span></p>
+				
 	</body>
 </html>
