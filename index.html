@@ -21,7 +21,7 @@
 				font-size: 17px;
 			}
 			
-			.topnav a:hover {
+			.topnav a:hover, .drop:hover .dropBtn {
 				background-color: #ddd;
 				color: black;
 			}
@@ -35,6 +35,48 @@
 				float: right;
 				background-color: #0078FF;
 				color: white;
+			}
+			
+			.drop {
+				float: left;
+				overflow: hidden;
+			}
+			
+			.drop .dropBtn {
+				font-size: 16px;
+				border: none;
+				outline: none;
+				color: white;
+				padding: 14px 16px;
+				background-color: inherit;
+				font-family: inherit;
+				margin: 0;
+			}
+			
+			.dropContent {
+				display: none;
+				position:absolute;
+				background-color: #f9f9f9;
+				min-width: 160px;
+				box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+				z-index: 1;
+			}
+			
+			.dropContent a {
+				float: none;
+				color: black;
+				padding: 12px 16px;
+				text-decoration: none;
+				display: block;
+				text-align: left;
+			}
+			
+			.dropContent a:hover {
+				background-color: #ddd;
+			}
+			
+			.drop:hover .dropContent {
+				display: block;
 			}
 		</style>
 		<style type="text/css">
@@ -13084,7 +13126,24 @@
 	
 	<body>
 		<p></p>
-		<div class="topnav"><a class="active" href="index.html">Home</a> <a href="pages/maskDetect.html">Mask Detection</a> <a href="pages/eye.html">Eye Detection</a> <a href="pages/topFace.html">Top Half Face</a> <a href="pages/wholeFace.html">Whole Face</a> <a href="pages/demoResults.html">Demo Notebook</a> <a class="git" href="https://github.com/HughN7/FaceMaskIdentityRecognition" target="_blank" rel="noopener">GitHub</a></div>
+		<div class="topnav">
+			<a class="active" href="index.html">Home</a>
+			<a href="pages/maskDetect.html">Mask Detection</a>
+			<a href="pages/eye.html">Eye Detection</a>
+			<a href="pages/topFace.html">Top Half Face</a>
+			<a href="pages/wholeFace.html">Whole Face</a>
+			<div class="drop">
+				<button class="dropBtn">Demo Results</button>
+				<div class="dropContent">
+					<a href="pages/demoResults.html">Demo 1</a>
+					<a href="pages/demoResults2.html">Demo 2</a>
+					<a href="pages/demoResults3.html">Demo 3</a>
+					<a href="pages/demoResults4.html">Demo 4</a>
+					<a href="pages/similarFace.html">Similar Face</a>
+				</div>
+			</div>
+			<a class="git" href="https://github.com/HughN7/FaceMaskIdentityRecognition" target="_blank" rel="noopener">GitHub</a>
+		</div>
 		<h2 style="text-align: center;">Welcome to the Face Mask Identity Recognition Project!</h2>
 		<p>&nbsp;</p>
 		<h3 style="padding-left: 30px;"><span style="text-decoration: underline;">Intro</span></h3>
